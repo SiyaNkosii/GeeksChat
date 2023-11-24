@@ -14,6 +14,7 @@ import java.util.List;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contact_id")
     private Long contactId;
 
     @ManyToOne
