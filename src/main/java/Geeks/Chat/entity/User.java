@@ -1,11 +1,8 @@
 package Geeks.Chat.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +19,9 @@ public class User {
 
     @Column(name="email")
     private String email;
+
+
+    private String password;
 
 
     // Getters and setters, constructors, etc.
