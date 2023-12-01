@@ -11,9 +11,10 @@ import java.util.List;
 
 
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
-@CrossOrigin("http://localhost:4200")
+//@CrossOrigin("http://localhost:4200")
 public interface UserRepository extends JpaRepository<User,Long> {
 // Page<User> findByUsernameContaining(@Param("username") String name , Pageable page);
 
  User findByEmail(String email);
+
 }
