@@ -7,7 +7,9 @@ import Geeks.Chat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceimpl implements UserService{
@@ -35,6 +37,28 @@ public class UserServiceimpl implements UserService{
         return true;
     }
 
+    @Override
+    public List<String> searchUsers(String username) {
+        List<User> users = userRepository.findByUsernameContaining(username);
+        List<String> usernames= new ArrayList<>();
+        for(User user: users){
+            usernames.add(user.getUsername());
+        }
+        return usernames;
+    }
+
+    @Override
+    public boolean addContact(String token, String contactUsername) {
+        String loggedInUserEmail= tokenService.extractEmail(token);
+        User loggenInUser= userRepository.findByEmail(loggedInUserEmail);
+        User contactUser= userRepository.findByUsernameContaining(contactUsername);
+        if (loggenInUser != null && contactUser !=null){
+            loggenInUser.addContact(contactUser);
+
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public LoginResponse loginUser(String email, String password) {

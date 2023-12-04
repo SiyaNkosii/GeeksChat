@@ -41,7 +41,7 @@ public class UserController{
         if (loginResponse != null) {
             return ResponseEntity.ok(loginResponse);
         } else {
-            return ResponseEntity.badRequest().body(new LoginResponse("Failed to log in", ""));
+            return ResponseEntity.badRequest().body(new LoginResponse());
         }
     }
 

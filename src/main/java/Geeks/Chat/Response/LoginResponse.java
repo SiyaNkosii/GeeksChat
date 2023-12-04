@@ -10,9 +10,13 @@ public class LoginResponse {
     private String message;
     private String username;
 
-    public LoginResponse(boolean b, String successfullyLoggedIn, String username) {
+    public LoginResponse() {
     }
 
-    public LoginResponse(String failedToLogIn, String successfullyLoggedIn) {
+    public LoginResponse(boolean success, String message, String username) {
+        this.success = success;
+        this.message = message;
+        this.username = username;
     }
+
 }
