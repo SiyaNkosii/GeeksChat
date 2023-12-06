@@ -25,4 +25,8 @@ public class Contact {
     @JoinColumn(name = "contact_user_id")
     private User contactuser;
 
+    public Contact(User user, User contactuser){
+        this.user = user;
+        this.contactuser = contactuser;
+    }
 }

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/GeeksChat/users")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -50,4 +52,16 @@ public class UserController{
         userService.resetPassword(request.getEmail(), request.getNewPassword());
         return ResponseEntity.ok("Password reset successfully");
     }
+    @GetMapping("/searchUsers/{username}")
+    public ResponseEntity<List<User>> searchUsers(@PathVariable String username, @RequestHeader("Authorization")String authToken){
+        List<User> foundUsers = userService.searchUsers(username);
+        return  ResponseEntity.ok(foundUsers);
+    }
+    @PostMapping("/{loggedInUserId}/addContact/{contactUserId}")
+    public void addContact(@PathVariable String loggedInUserId, @PathVariable String contactUserId)
+    {
+        userService.addContact(Long.parseLong(loggedInUserId) , Long.parseLong(contactUserId));
+    }
+//    @GetMapping("/{loggedInUserId}/contacts")
+//    public ResponseEntity<List<User>> ge
 }

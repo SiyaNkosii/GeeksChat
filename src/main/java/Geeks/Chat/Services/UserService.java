@@ -11,6 +11,8 @@ public interface UserService {
     void resetPassword(String email, String newPassword);
 
     boolean registerUser(UserRegistrationRequest userRequest);
-    List<String> searchUsers(String username);
-    boolean addContact(String token, String contactUsername);
+    List<User> searchUsers(String username);
+    void addContact(Long loggedInUserId, Long contactUserId);
+
+    List<User> getContactList(int loggedInUser);
 }
