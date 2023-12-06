@@ -12,6 +12,6 @@ import java.util.List;
 
 //@CrossOrigin("http://localhost:4200")
 public interface ContactRepository extends JpaRepository<Contact,Long> {
-    List<Contact> findByUser(User user);
+    //boolean existsByUserAndContactUser(User user, User contactUser);
 
 }
