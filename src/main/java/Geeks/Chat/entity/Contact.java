@@ -23,10 +23,6 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn(name = "contact_user_id")
-    private User contactUser;
+    private User contactuser;
 
-    public Contact(User user, User contactUser){
-        this.user = user;
-        this.contactUser = contactUser;
-    }
 }

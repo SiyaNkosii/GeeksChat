@@ -58,10 +58,9 @@ public class UserServiceimpl implements UserService{
     }
     @Override
     public List<User> searchUsers(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByusernameContaining(username);
     }
 
-    /*
     @Override
     public void addContact(Long loggedInUserId, Long contactUserId) {
         User loggedInUser = userRepository.findById(loggedInUserId).orElse(null);
@@ -77,9 +76,6 @@ public class UserServiceimpl implements UserService{
             }
         }
     }
-    */
-
-    /*
     @Override
     public List<User> getContactList(int loggedInUser){
         return userRepository.getChatList(loggedInUser);
@@ -88,7 +84,5 @@ public class UserServiceimpl implements UserService{
         Optional<User> userOptional= userRepository.findById(userId);
         return userOptional.orElse(null);
     }
-
-     */
 
 }

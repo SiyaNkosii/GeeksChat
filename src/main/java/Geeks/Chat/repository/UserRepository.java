@@ -18,11 +18,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
  User findByEmail(String email);
  //Optional<User> findById(Long user1Id);
 
- List<User> findByUsername(String username);
- /*
+ List<User> findByusernameContaining(String username);
  @Query("SELECT c.contactUser FROM Contact c WHERE c.user.userid = :loggedInUserId")
  List<User> getChatList(@Param("loggedInUserId") int loggedInUserId);
-
-  */
  Optional<User> findById(Long Id);
 }
