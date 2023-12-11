@@ -1,18 +1,17 @@
-package Geeks.Chat.Services;
+package Geeks.Chat.service.serviceImpl;
 
-import Geeks.Chat.DataTransfere.UserRegistrationRequest;
-import Geeks.Chat.Response.LoginResponse;
-import Geeks.Chat.entity.Contact;
+import Geeks.Chat.requestPayloads.UserRegistrationRequest;
+import Geeks.Chat.responsePayloads.LoginResponse;
 import Geeks.Chat.entity.User;
 import Geeks.Chat.repository.ContactRepository;
 import Geeks.Chat.repository.UserRepository;
+import Geeks.Chat.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UserServiceimpl implements UserService{
+public class UserServiceimpl implements UserService {
 
     private final UserRepository userRepository;
     private final ContactRepository contactRepository;
@@ -58,31 +57,31 @@ public class UserServiceimpl implements UserService{
     }
     @Override
     public List<User> searchUsers(String username) {
-        return userRepository.findByusernameContaining(username);
+        return userRepository.findByUsernameContaining(username);
     }
 
-    @Override
-    public void addContact(Long loggedInUserId, Long contactUserId) {
-        User loggedInUser = userRepository.findById(loggedInUserId).orElse(null);
-        User contactUser = userRepository.findById(contactUserId).orElse(null);
-
-        if(loggedInUser !=null && contactUser !=null) {
-            if (!contactRepository.exist(loggedInUser, contactUser)) {
-                Contact contact = new Contact(loggedInUser, contactUser);
-                contactRepository.save(contact);
-                System.out.println("Contact added successfully!");
-            } else {
-                System.out.println("Contact already exist in your contact");
-            }
-        }
-    }
-    @Override
-    public List<User> getContactList(int loggedInUser){
-        return userRepository.getChatList(loggedInUser);
-    }
-    public User getUserById(Long userId){
-        Optional<User> userOptional= userRepository.findById(userId);
-        return userOptional.orElse(null);
-    }
+//    @Override
+//    public void addContact(Long loggedInUserId, Long contactUserId) {
+//        User loggedInUser = userRepository.findById(loggedInUserId).orElse(null);
+//        User contactUser = userRepository.findById(contactUserId).orElse(null);
+//
+//        if(loggedInUser !=null && contactUser !=null) {
+//            if (!contactRepository.exist(loggedInUser, contactUser)) {
+//                Contact contact = new Contact(loggedInUser, contactUser);
+//                contactRepository.save(contact);
+//                System.out.println("Contact added successfully!");
+//            } else {
+//                System.out.println("Contact already exist in your contact");
+//            }
+//        }
+//    }
+//    @Override
+//    public List<User> getContactList(int loggedInUser){
+//        return userRepository.getChatList(loggedInUser);
+//    }
+//    public User getUserById(Long userId){
+//        Optional<User> userOptional= userRepository.findById(userId);
+//        return userOptional.orElse(null);
+//    }
 
 }

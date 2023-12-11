@@ -1,12 +1,11 @@
-package Geeks.Chat.Controller;
+package Geeks.Chat.controller;
 
-import Geeks.Chat.DataTransfere.ForgotPasswordRequest;
-import Geeks.Chat.DataTransfere.UserLoginRequest;
-import Geeks.Chat.DataTransfere.UserRegistrationRequest;
-import Geeks.Chat.Response.ApiResponse;
-import Geeks.Chat.Response.LoginResponse;
-import Geeks.Chat.Services.UserService;
-import Geeks.Chat.Services.UserServiceimpl;
+import Geeks.Chat.requestPayloads.ForgotPasswordRequest;
+import Geeks.Chat.requestPayloads.UserLoginRequest;
+import Geeks.Chat.requestPayloads.UserRegistrationRequest;
+import Geeks.Chat.responsePayloads.ApiResponse;
+import Geeks.Chat.responsePayloads.LoginResponse;
+import Geeks.Chat.service.serviceImpl.UserServiceimpl;
 import Geeks.Chat.entity.User;
 import Geeks.Chat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

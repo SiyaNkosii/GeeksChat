@@ -1,7 +1,7 @@
-package Geeks.Chat.Services;
+package Geeks.Chat.service;
 
-import Geeks.Chat.DataTransfere.UserRegistrationRequest;
-import Geeks.Chat.Response.LoginResponse;
+import Geeks.Chat.requestPayloads.UserRegistrationRequest;
+import Geeks.Chat.responsePayloads.LoginResponse;
 import Geeks.Chat.entity.User;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package Geeks.Chat.Response;
+package Geeks.Chat.responsePayloads;
 
 import lombok.Getter;
 import lombok.Setter;

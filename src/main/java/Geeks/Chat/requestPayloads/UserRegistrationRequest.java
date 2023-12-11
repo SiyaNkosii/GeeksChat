@@ -1,4 +1,4 @@
-package Geeks.Chat.DataTransfere;
+package Geeks.Chat.requestPayloads;
 
 import lombok.Getter;
 import lombok.Setter;

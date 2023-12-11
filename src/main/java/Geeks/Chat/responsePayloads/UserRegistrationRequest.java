@@ -1,11 +1,13 @@
-package Geeks.Chat.DataTransfere;
+package Geeks.Chat.responsePayloads;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserLoginRequest {
+public class UserRegistrationRequest {
+    private String username;
     private String email;
     private String password;
+
 }
