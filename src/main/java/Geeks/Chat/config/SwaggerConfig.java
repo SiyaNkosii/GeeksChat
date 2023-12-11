@@ -26,7 +26,7 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("geeks.chat"))
+                .apis(RequestHandlerSelectors.basePackage("Geeks.Chat"))
                 .build()
                 .apiInfo(metaData())
                 .produces(DEFAULT_PRODUCES_AND_CONSUMES)
