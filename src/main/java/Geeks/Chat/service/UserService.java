@@ -1,5 +1,6 @@
 package Geeks.Chat.service;
 
+import Geeks.Chat.entity.Contact;
 import Geeks.Chat.requestPayloads.UserRegistrationRequest;
 import Geeks.Chat.responsePayloads.LoginResponse;
 import Geeks.Chat.entity.User;
@@ -12,7 +13,5 @@ public interface UserService {
 
     boolean registerUser(UserRegistrationRequest userRequest);
     List<User> searchUsers(String username);
-    //void addContact(Long loggedInUserId, Long contactUserId);
-
-    //List<User> getContactList(int loggedInUser);
+    Contact addToMyContact(String loggedInUser, String searchedUser);
 }

@@ -1,5 +1,6 @@
 package Geeks.Chat.controller;
 
+import Geeks.Chat.entity.Contact;
 import Geeks.Chat.requestPayloads.ForgotPasswordRequest;
 import Geeks.Chat.requestPayloads.UserLoginRequest;
 import Geeks.Chat.requestPayloads.UserRegistrationRequest;
@@ -55,14 +56,8 @@ public class UserController{
         return  ResponseEntity.ok(foundUsers);
     }
 
-    /*
-    @PostMapping("/{loggedInUserId}/addContact/{contactUserId}")
-    public void addContact(@PathVariable String loggedInUserId, @PathVariable String contactUserId)
-    {
-        userService.addContact(Long.parseLong(loggedInUserId) , Long.parseLong(contactUserId));
+    @PostMapping(value ="/users/add-contact/{loggedusername}/{searchedusername}" ,produces = "application/json")
+    public ResponseEntity<Contact> addUserToMyContact(@PathVariable String loggedusername, @PathVariable String searchedusername) {
+        return ResponseEntity.ok(userService.addToMyContact(loggedusername,searchedusername));
     }
-     */
-
-//    @GetMapping("/{loggedInUserId}/contacts")
-//    public ResponseEntity<List<User>> ge
 }

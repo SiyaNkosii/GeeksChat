@@ -1,25 +1,30 @@
 package Geeks.Chat.service.serviceImpl;
 
+import Geeks.Chat.entity.Contact;
+import Geeks.Chat.exceptions.ResourceAlreadyExistException;
+import Geeks.Chat.exceptions.ResourceNotFoundException;
 import Geeks.Chat.requestPayloads.UserRegistrationRequest;
 import Geeks.Chat.responsePayloads.LoginResponse;
 import Geeks.Chat.entity.User;
 import Geeks.Chat.repository.ContactRepository;
 import Geeks.Chat.repository.UserRepository;
 import Geeks.Chat.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceimpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final ContactRepository contactRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private  ContactRepository contactRepository;
 
-    public UserServiceimpl(UserRepository userRepository, ContactRepository contactRepository) {
-        this.userRepository = userRepository;
-        this.contactRepository = contactRepository;
-    }
 
     @Override
     public boolean registerUser(UserRegistrationRequest userRequest){
@@ -57,7 +62,34 @@ public class UserServiceimpl implements UserService {
     }
     @Override
     public List<User> searchUsers(String username) {
-        return userRepository.findByUsernameContaining(username);
+        List<User> users=userRepository.findByUsernameContaining(username);
+        if(!users.isEmpty()){
+            return users;
+        }else {
+            log.error("unable to find username: {}",username);
+            throw new ResourceNotFoundException("Could not find contact with username :"+username);
+        }
+    }
+
+    @Override
+    public Contact addToMyContact(String loggedInUser, String searcheduser) {
+        User loggedinUser= userRepository.findByUsername(loggedInUser);
+        User searchedUser= userRepository.findByUsername(searcheduser);
+
+
+        Optional<Contact> existingContact = contactRepository.findByUserUsername(loggedInUser);
+        if(existingContact.isPresent()){
+            throw new ResourceAlreadyExistException("Contact is already part of your contacts.");
+        }else {
+
+            Contact contact= Contact.builder()
+                    .user(loggedinUser)
+                    .contactuser(searchedUser)
+                    .build();
+            log.info("Saving contact with username: {} to my contact",searchedUser);
+            contactRepository.save(contact);
+            return contact;
+        }
     }
 
 //    @Override
