@@ -24,9 +24,9 @@ public class UserController{
     private UserServiceimpl userService;
 
 
-   // @CrossOrigin(origins = "http://localhost:4200")
+   @CrossOrigin(origins = "http://localhost:4200")
 
-    @PostMapping(value ="/users/register", consumes = "application/json" ,produces = "application/json")
+    @PostMapping("/users/register")
     public ResponseEntity<ApiResponse> registerUser(@RequestBody UserRegistrationRequest request) {
         boolean isRegistered = userService.registerUser(request);
         if (isRegistered) {
@@ -36,7 +36,8 @@ public class UserController{
         }
     }
 
-    @PostMapping(value ="/users/login", consumes = "application/json" ,produces = "application/json")    public ResponseEntity<LoginResponse> loginUser(@RequestBody UserLoginRequest request) {
+    @PostMapping("/users/login")
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody UserLoginRequest request) {
         LoginResponse loginResponse = userService.loginUser(request.getEmail(), request.getPassword());
         if (loginResponse != null) {
             return ResponseEntity.ok(loginResponse);
@@ -45,7 +46,7 @@ public class UserController{
         }
     }
 
-    @PostMapping(value ="/users/forgot-password", consumes = "application/json" ,produces = "application/json")
+    @PostMapping("/users/forgot-password")
     public ResponseEntity<String> resetPassword(@RequestBody ForgotPasswordRequest request) {
         userService.resetPassword(request.getEmail(), request.getNewPassword());
         return ResponseEntity.ok("Password reset successfully");
@@ -56,7 +57,7 @@ public class UserController{
         return  ResponseEntity.ok(foundUsers);
     }
 
-    @PostMapping(value ="/users/add-contact/{loggedusername}/{searchedusername}" ,produces = "application/json")
+    @PostMapping("/users/add-contact/{loggedusername}/{searchedusername}")
     public ResponseEntity<Contact> addUserToMyContact(@PathVariable String loggedusername, @PathVariable String searchedusername) {
         return ResponseEntity.ok(userService.addToMyContact(loggedusername,searchedusername));
     }

@@ -92,28 +92,4 @@ public class UserServiceimpl implements UserService {
         }
     }
 
-//    @Override
-//    public void addContact(Long loggedInUserId, Long contactUserId) {
-//        User loggedInUser = userRepository.findById(loggedInUserId).orElse(null);
-//        User contactUser = userRepository.findById(contactUserId).orElse(null);
-//
-//        if(loggedInUser !=null && contactUser !=null) {
-//            if (!contactRepository.exist(loggedInUser, contactUser)) {
-//                Contact contact = new Contact(loggedInUser, contactUser);
-//                contactRepository.save(contact);
-//                System.out.println("Contact added successfully!");
-//            } else {
-//                System.out.println("Contact already exist in your contact");
-//            }
-//        }
-//    }
-//    @Override
-//    public List<User> getContactList(int loggedInUser){
-//        return userRepository.getChatList(loggedInUser);
-//    }
-//    public User getUserById(Long userId){
-//        Optional<User> userOptional= userRepository.findById(userId);
-//        return userOptional.orElse(null);
-//    }
-
 }
