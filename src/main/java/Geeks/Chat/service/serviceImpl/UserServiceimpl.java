@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,16 @@ public class UserServiceimpl implements UserService {
             log.info("Saving contact with username: {} to my contact",searchedUser);
             contactRepository.save(contact);
             return contact;
+        }
+    }
+
+    public List<Contact> getContactsForLoggedInUser(String loggedInUsername) {
+        User loggedInUser = userRepository.findByUsername(loggedInUsername);
+        if (loggedInUser != null) {
+            return contactRepository.findByUser(loggedInUser);
+        } else {
+            // Handle scenario where logged-in user doesn't exist
+            return Collections.emptyList();
         }
     }
 

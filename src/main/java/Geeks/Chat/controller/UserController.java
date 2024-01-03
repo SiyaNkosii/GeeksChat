@@ -61,4 +61,9 @@ public class UserController{
     public ResponseEntity<Contact> addUserToMyContact(@PathVariable String loggedusername, @PathVariable String searchedusername) {
         return ResponseEntity.ok(userService.addToMyContact(loggedusername,searchedusername));
     }
+    @GetMapping("/my-contacts")
+    public ResponseEntity<List<Contact>> getMyContacts(@RequestParam String loggedInUsername) {
+        List<Contact> myContacts =userService.getContactsForLoggedInUser(loggedInUsername);
+        return ResponseEntity.ok(myContacts);
+    }
 }

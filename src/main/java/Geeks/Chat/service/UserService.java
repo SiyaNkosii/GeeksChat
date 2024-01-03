@@ -14,4 +14,6 @@ public interface UserService {
     boolean registerUser(UserRegistrationRequest userRequest);
     List<User> searchUsers(String username);
     Contact addToMyContact(String loggedInUser, String searchedUser);
+
+
 }
