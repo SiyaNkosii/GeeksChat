@@ -10,6 +10,7 @@ import Geeks.Chat.service.serviceImpl.UserServiceimpl;
 import Geeks.Chat.entity.User;
 import Geeks.Chat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,9 +62,14 @@ public class UserController{
     public ResponseEntity<Contact> addUserToMyContact(@PathVariable String loggedusername, @PathVariable String searchedusername) {
         return ResponseEntity.ok(userService.addToMyContact(loggedusername,searchedusername));
     }
-    @GetMapping("/my-contacts")
-    public ResponseEntity<List<Contact>> getMyContacts(@RequestParam String loggedInUsername) {
-        List<Contact> myContacts =userService.getContactsForLoggedInUser(loggedInUsername);
-        return ResponseEntity.ok(myContacts);
+
+    @GetMapping("/List/{loggedInUsername}")
+    public ResponseEntity<List<Contact>> getChatList(@PathVariable String loggedInUsername){
+      List<Contact> chatList = userService.getChatListForloggedInUser(loggedInUsername);
+      if(chatList == null || chatList.isEmpty()){
+          return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      }
+
+      return  new ResponseEntity<>(chatList, HttpStatus.OK);
     }
 }

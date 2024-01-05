@@ -16,6 +16,5 @@ public interface ContactRepository extends JpaRepository<Contact,Long> {
             "JOIN c.user u " +
             "WHERE u.username = :username")
     Optional<Contact> findByUserUsername(String username);
-
     List<Contact> findByUser(User user);
 }
