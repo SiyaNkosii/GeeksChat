@@ -3,6 +3,7 @@ package Geeks.Chat.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Entity
@@ -26,6 +27,7 @@ public class User {
 
 
     private String password;
+
 
 
     // Getters and setters, constructors, etc.

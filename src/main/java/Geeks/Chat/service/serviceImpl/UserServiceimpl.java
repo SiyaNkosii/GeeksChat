@@ -1,6 +1,7 @@
 package Geeks.Chat.service.serviceImpl;
 
 import Geeks.Chat.entity.Contact;
+import Geeks.Chat.exceptions.IllegalArgumentException;
 import Geeks.Chat.exceptions.ResourceAlreadyExistException;
 import Geeks.Chat.exceptions.ResourceNotFoundException;
 import Geeks.Chat.requestPayloads.UserRegistrationRequest;
@@ -78,21 +79,30 @@ public class UserServiceimpl implements UserService {
         User loggedinUser= userRepository.findByUsername(loggedInUser);
         User searchedUser= userRepository.findByUsername(searcheduser);
 
+        if(loggedInUser != null && searchedUser !=null) {
+            if(loggedInUser.equals(searcheduser)){
+                throw new IllegalArgumentException("Cannot add yourself as a contact.");
+            }
+            List<Contact> existingContacts = contactRepository.findByUser(loggedinUser);
+            for (Contact contact : existingContacts) {
+                if (contact.getContactuser().getUsername().equals(searcheduser)) {
+                    throw new ResourceAlreadyExistException("Contact is already part of your contacts.");
+                }
+            }
 
-        Optional<Contact> existingContact = contactRepository.findByUserUsername(loggedInUser);
-        if(existingContact.isPresent()){
-            throw new ResourceAlreadyExistException("Contact is already part of your contacts.");
-        }else {
 
-            Contact contact= Contact.builder()
+            Contact contact = Contact.builder()
                     .user(loggedinUser)
                     .contactuser(searchedUser)
                     .build();
-            log.info("Saving contact with username: {} to my contact",searchedUser);
+            log.info("Saving contact with username: {} to my contact", searchedUser);
             contactRepository.save(contact);
             return contact;
+        }else {
+            throw new ResourceNotFoundException("Logged-in user or searched user not found.");
         }
     }
+
 
     @Override
     public List<Contact> getChatListForloggedInUser(String loggedInUsername) {

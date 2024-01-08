@@ -36,4 +36,13 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
 
     }
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<?> handleIllegalArgumentException(RuntimeException ex){
+        ApiError apiError = new ApiError();
+        apiError.setCode(HttpStatus.CONFLICT.value());
+        apiError.setStatus(HttpStatus.CONFLICT);
+        apiError.setTimestamp(LocalDateTime.now());
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
 }

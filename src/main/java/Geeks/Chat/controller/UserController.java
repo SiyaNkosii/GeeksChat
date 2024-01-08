@@ -63,10 +63,12 @@ public class UserController{
         return ResponseEntity.ok(userService.addToMyContact(loggedusername,searchedusername));
     }
 
-    @GetMapping("/List/{loggedInUsername}")
+    @GetMapping("/{loggedInUsername}/List")
     public ResponseEntity<List<Contact>> getChatList(@PathVariable String loggedInUsername){
       List<Contact> chatList = userService.getChatListForloggedInUser(loggedInUsername);
-      if(chatList == null || chatList.isEmpty()){
+        System.out.println(chatList.toString());
+
+        if(chatList == null || chatList.isEmpty()){
           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
 
