@@ -12,6 +12,7 @@ import Geeks.Chat.repository.UserRepository;
 import Geeks.Chat.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,6 +28,9 @@ public class UserServiceimpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private  ContactRepository contactRepository;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
 
     @Override
@@ -97,6 +101,9 @@ public class UserServiceimpl implements UserService {
                     .build();
             log.info("Saving contact with username: {} to my contact", searchedUser);
             contactRepository.save(contact);
+
+            String message = loggedInUser + "added" + searcheduser + "as a contact";
+            kafkaTemplate.send("user-conversations",message);
             return contact;
         }else {
             throw new ResourceNotFoundException("Logged-in user or searched user not found.");
@@ -114,6 +121,9 @@ public class UserServiceimpl implements UserService {
         }
 
     }
-
+    public User getUserById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.orElse(null);
+    }
 
 }
