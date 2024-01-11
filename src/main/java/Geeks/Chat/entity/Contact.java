@@ -3,6 +3,7 @@ package Geeks.Chat.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Entity
@@ -25,4 +26,6 @@ public class Contact {
     @JoinColumn(name = "contact_user_id")
     private User contactuser;
 
+    @OneToMany(mappedBy = "receiver")
+    private List<Conversation> conversations;
 }

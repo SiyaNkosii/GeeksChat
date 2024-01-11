@@ -17,4 +17,7 @@ public interface ContactRepository extends JpaRepository<Contact,Long> {
             "WHERE u.username = :username")
     Optional<Contact> findByUserUsername(String username);
     List<Contact> findByUser(User user);
+
+    Optional<Contact> findByUserAndContactuser(User user, User contactUser);
+
 }

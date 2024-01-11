@@ -1,5 +1,6 @@
 package Geeks.Chat.entity;
 
+import liquibase.pro.packaged.J;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,14 +15,17 @@ import javax.persistence.*;
 public class Conversation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "conv_id")
+    private Long convId;
 
-    @Column(name = "sender")
-    private String sender;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private User sender;
 
-    @Column(name = "receiver")
-    private String receiver;
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 
-    @Column(name = "message")
     private String message;
+
 }

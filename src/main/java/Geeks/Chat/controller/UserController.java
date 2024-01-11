@@ -75,10 +75,10 @@ public class UserController{
       return  new ResponseEntity<>(chatList, HttpStatus.OK);
     }
 
-    @GetMapping("/selected-user/{selectedUserId}")
-    public ResponseEntity<User> getSelectedUser(@PathVariable Long selectedUserId) {
+    @GetMapping("/selected-user/{SelectedUsername}")
+    public ResponseEntity<User> getSelectedUser(@PathVariable String SelectedUsername) {
         // Retrieve detailed information about the selected user
-        User selectedUser = userService.getUserById(selectedUserId);
+        User selectedUser = userService.SelectedUsername(SelectedUsername);
 
         if (selectedUser == null) {
             return ResponseEntity.notFound().build();

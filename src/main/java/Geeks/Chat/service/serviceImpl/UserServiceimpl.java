@@ -102,8 +102,8 @@ public class UserServiceimpl implements UserService {
             log.info("Saving contact with username: {} to my contact", searchedUser);
             contactRepository.save(contact);
 
-            String message = loggedInUser + "added" + searcheduser + "as a contact";
-            kafkaTemplate.send("user-conversations",message);
+
+         //  kafkaTemplate.send("${spring.kafka.topic.name}", searcheduser);
             return contact;
         }else {
             throw new ResourceNotFoundException("Logged-in user or searched user not found.");
@@ -121,9 +121,12 @@ public class UserServiceimpl implements UserService {
         }
 
     }
-    public User getUserById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        return userOptional.orElse(null);
+    public User SelectedUsername(String selectedUsername) {
+        User selectedUser = userRepository.findByUsername(selectedUsername);
+        if(selectedUser !=null){
+            return selectedUser;
+        }
+        return null;
     }
 
 }

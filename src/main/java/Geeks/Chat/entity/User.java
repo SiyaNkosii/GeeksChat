@@ -28,7 +28,10 @@ public class User {
 
     private String password;
 
+    @OneToMany(mappedBy = "sender")
+    private List<Conversation> sentConversations;
 
-
+    @OneToMany(mappedBy = "receiver")
+    private List<Conversation> receivedConversations;
 
 }
