@@ -103,7 +103,7 @@ public class UserServiceimpl implements UserService {
             contactRepository.save(contact);
 
 
-         //  kafkaTemplate.send("${spring.kafka.topic.name}", searcheduser);
+         kafkaTemplate.send("${spring.kafka.topic.name}", searcheduser);
             return contact;
         }else {
             throw new ResourceNotFoundException("Logged-in user or searched user not found.");
