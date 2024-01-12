@@ -28,4 +28,6 @@ public class Conversation {
 
     private String message;
 
+    public Conversation(String sender, String receiver, String message) {
+    }
 }
