@@ -1,12 +1,14 @@
 package Geeks.Chat.kafkaService;
 
 
-import Geeks.Chat.config.JacksonObjectMapperConfig;
 import Geeks.Chat.entity.Conversation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 
@@ -16,20 +18,18 @@ public class KafkaProducer {
     @Value("${spring.kafka.topic.name}")
     private String topicName;
     @Autowired
-    private KafkaTemplate<String,String> kafkaTemplate;
-    @Autowired
-    private JacksonObjectMapperConfig jacksonObjectMapperConfig;
+    private KafkaTemplate<String,Conversation> kafkaTemplate;
 
 
 
-    public void sendMessage(String sender, String receiver, String message){
+    public void sendMessage(Conversation conversation){
         try {
-            String key = sender + ":"+ receiver;
-            Conversation conversation = new Conversation(sender, receiver, message);
+            Message<Conversation> message = MessageBuilder
+                    .withPayload(conversation)
+                    .setHeader(KafkaHeaders.TOPIC, topicName)
+                    .build();
 
-            String value = jacksonObjectMapperConfig.writeValueAsStringUsingObjectMapper(jacksonObjectMapperConfig.ObjectMapper(), conversation);
-
-            kafkaTemplate.send(topicName,key,value);
+            kafkaTemplate.send(message);
             log.info("Message sent successfully:" + message);
 
         } catch (Exception e){
