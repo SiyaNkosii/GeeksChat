@@ -1,18 +1,20 @@
 package Geeks.Chat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Builder
 @Entity
+@Table(name = "users")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +24,15 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-
 
     private String password;
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Conversation> sentConversations;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<Conversation> receivedConversations;
-
 }
