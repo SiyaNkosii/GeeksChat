@@ -14,6 +14,7 @@ import org.springframework.kafka.KafkaException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,8 @@ public class MessageService {
 
     @Autowired
     private KafkaProducer kafkaProducer;
+    private final List<Conversation> inMemorySentMessages = new ArrayList<>();
+
     @Transactional
     public void sendConversation(String senderUsername, String receiverUsername, String message) {
         User sender = userRepository.findByUsername(senderUsername);
@@ -50,6 +53,7 @@ public class MessageService {
                 receiver.getReceivedConversations().add(conversation);
                 conversationRepository.save(conversation);
 
+                inMemorySentMessages.add(conversation);
 
 
                 kafkaProducer.sendMessage(conversation);
@@ -84,4 +88,8 @@ public class MessageService {
         }
         return null;
     }
+    public List<Conversation>getInMemorySentMessages(){
+        return inMemorySentMessages;
+    }
 }
+

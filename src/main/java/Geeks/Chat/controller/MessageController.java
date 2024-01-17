@@ -1,6 +1,7 @@
 package Geeks.Chat.controller;
 
 import Geeks.Chat.entity.Conversation;
+import Geeks.Chat.kafkaService.KafkaConsumer;
 import Geeks.Chat.messagingService.MessageService;
 import Geeks.Chat.requestPayloads.MessageRequest;
 import Geeks.Chat.responsePayloads.ApiResponse;
@@ -15,6 +16,8 @@ import java.util.List;
 public class MessageController {
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private KafkaConsumer kafkaConsumer;
 
     @PostMapping("/send-message")
     public ResponseEntity<ApiResponse> sendMessage(@RequestBody MessageRequest messageRequest){
@@ -26,4 +29,13 @@ public class MessageController {
         return ResponseEntity.ok(new ApiResponse("Message sent successfully"));
     }
 
+    @GetMapping("/received-messages")
+    public List<Conversation>getInMemoryMessages(){
+        return kafkaConsumer.getInMemoryMessages();
+    }
+
+    @GetMapping("/sent-messages")
+    public List<Conversation>getInMemorySentMessages(){
+        return messageService.getInMemorySentMessages();
+    }
 }
