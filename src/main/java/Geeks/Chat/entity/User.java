@@ -33,6 +33,8 @@ public class User {
     @JsonIgnore
     private List<Conversation> sentConversations;
 
+    @JsonIgnore
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<Conversation> receivedConversations;
 }
