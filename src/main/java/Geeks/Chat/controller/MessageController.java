@@ -1,12 +1,13 @@
 package Geeks.Chat.controller;
 
 import Geeks.Chat.entity.Conversation;
+import Geeks.Chat.exceptions.ResourceNotFoundException;
 import Geeks.Chat.kafkaService.KafkaConsumer;
 import Geeks.Chat.messagingService.MessageService;
 import Geeks.Chat.requestPayloads.MessageRequest;
 import Geeks.Chat.responsePayloads.ApiResponse;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +35,16 @@ public class MessageController {
         return kafkaConsumer.getInMemoryMessages();
     }
 
-    @GetMapping("/sent-messages")
-    public List<Conversation>getInMemorySentMessages(){
-        return messageService.getInMemorySentMessages();
+    @GetMapping("/get-saved-messages/{loggedInUsername}/{contactUsername}")
+    public ResponseEntity<List<Conversation>> getSavedMessages(
+            @PathVariable String loggedInUsername,
+            @PathVariable String contactUsername
+    ){
+        try{
+            List<Conversation> savedMessage = messageService.getConversations(loggedInUsername,contactUsername);
+            return  ResponseEntity.ok(savedMessage);
+        }catch (ResourceNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }

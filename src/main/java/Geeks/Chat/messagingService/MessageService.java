@@ -31,7 +31,6 @@ public class MessageService {
 
     @Autowired
     private KafkaProducer kafkaProducer;
-    private final List<Conversation> inMemorySentMessages = new ArrayList<>();
 
     @Transactional
     public void sendConversation(String senderUsername, String receiverUsername, String message) {
@@ -53,10 +52,10 @@ public class MessageService {
                 receiver.getReceivedConversations().add(conversation);
                 conversationRepository.save(conversation);
 
-                inMemorySentMessages.add(conversation);
 
 
                 kafkaProducer.sendMessage(conversation);
+
 
 
             } catch (Exception e) {
@@ -88,8 +87,6 @@ public class MessageService {
         }
         return null;
     }
-    public List<Conversation>getInMemorySentMessages(){
-        return inMemorySentMessages;
-    }
+
 }
 
